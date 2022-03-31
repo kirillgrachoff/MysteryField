@@ -15,3 +15,8 @@ Type `make run_client` on your local machine and play the game.
 
 ## Implementation details
 This is application written in pure Go. It uses gRPC framework and Protobuf.
+
+Client and server communicate using double-way streaming.
+
+Server accepts connection for each client adn starts interaction.
+When the game is terminated connection is closed.
