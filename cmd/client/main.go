@@ -2,6 +2,7 @@ package main
 
 import (
 	"client/interconnect"
+	"client/util"
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
@@ -20,15 +21,9 @@ var (
 )
 
 func init() {
-	port = os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	}
+	port = util.GetOrDefault("PORT", defaultPort)
 
-	host = os.Getenv("HOST")
-	if host == "" {
-		host = defaultHostname
-	}
+	host = util.GetOrDefault("HOST", defaultHostname)
 }
 
 func readInputCharacter() string {
@@ -50,7 +45,7 @@ func exitWin() {
 
 func printStatus(status *interconnect.WordStatus) {
 	fmt.Println("----------")
-	fmt.Printf("Your progress:\n%v\nfuel:%v\n", status.GameState, status.Fuel)
+	fmt.Printf("Your progress:\n%v\nfuel:%v\n\n", status.GameState, status.Fuel)
 }
 
 func GameStep(stream interconnect.Observer_ProcessGameClient) {
