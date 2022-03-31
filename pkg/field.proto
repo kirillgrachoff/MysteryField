@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package field;
+
+option go_package = "./interconnect";
+
+service Observer {
+  rpc ProcessGame(stream WordGuess) returns (stream WordStatus);
+}
+
+message WordStatus {
+  string game_state = 1;
+  enum GameStatus {
+    RUNNING = 0;
+    WIN = 1;
+    DEFEAT = 2;
+  }
+  GameStatus game_status = 2;
+  uint32 fuel = 3;
+}
+
+message WordGuess {
+  string character = 1;
+}
