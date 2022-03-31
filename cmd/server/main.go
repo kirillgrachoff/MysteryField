@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"os"
+	"server/util"
 	"strconv"
 )
 
@@ -19,28 +19,21 @@ var (
 )
 
 func init() {
-	port = os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	}
+	port = util.GetOrDefault("PORT", defaultPort)
 
-	secretWord = os.Getenv("SECRET_WORD")
-	if secretWord == "" {
-		secretWord = defaultSecretWord
-	}
+	secretWord = util.GetOrDefault("SECRET_WORD", defaultSecretWord)
 
-	fuel := os.Getenv("FUEL_INIT")
-	if fuel == "" {
-		fuel = defaultFuelInit
-	}
+	fuel := util.GetOrDefault("FUEL_INIT", defaultFuelInit)
+
 	value, err := strconv.Atoi(fuel)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fuelInit = uint32(value + len(secretWord))
+
+	fuelInit = uint32(value + len(util.UniqueCharacters(secretWord)))
 }
 
 func main() {
-	srv := NewLocalImpl(fuelInit, secretWord)
-	srv.Play()
+	srv := NewObserverImpl(fuelInit, secretWord)
+	srv.ServeGrpc()
 }

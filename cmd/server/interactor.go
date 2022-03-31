@@ -15,7 +15,7 @@ type ObserverImpl struct {
 	fuel uint32
 }
 
-func NewLocalImpl(fuel uint32, word string) *ObserverImpl {
+func NewObserverImpl(fuel uint32, word string) *ObserverImpl {
 	return &ObserverImpl{
 		fuel: fuel,
 		word: word,
@@ -23,12 +23,16 @@ func NewLocalImpl(fuel uint32, word string) *ObserverImpl {
 }
 
 func (impl *ObserverImpl) ProcessGame(server interconnect.Observer_ProcessGameServer) error {
+	log.Println("Client Accepted")
+	log.Printf("Word: %v, fuel: %v", impl.word, impl.fuel)
 	game := impl.NewGameInstance(server)
 	game.server = server
-	return game.PlayImpl()
+	err := game.PlayImpl()
+	log.Println("End Client game")
+	return err
 }
 
-func (impl *ObserverImpl) Play() {
+func (impl *ObserverImpl) ServeGrpc() {
 	listener, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Fatalln(err)
