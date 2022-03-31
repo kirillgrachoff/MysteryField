@@ -2,57 +2,10 @@ package main
 
 import (
 	"fmt"
-	"google.golang.org/grpc"
-	"log"
-	"net"
 	"server/interconnect"
 	"server/util"
 	"strings"
 )
-
-type LocalImpl struct {
-	interconnect.UnimplementedObserverServer
-
-	word string
-	fuel uint32
-}
-
-func NewLocalImpl(fuel uint32, word string) *LocalImpl {
-	return &LocalImpl{
-		fuel: fuel,
-		word: word,
-	}
-}
-
-func (l *LocalImpl) ProcessGame(server interconnect.Observer_ProcessGameServer) error {
-	game := l.NewGameInstance(server)
-	game.server = server
-	return game.PlayImpl()
-}
-
-func (l *LocalImpl) Play() {
-	listener, err := net.Listen("tcp", ":"+port)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	s := grpc.NewServer()
-	interconnect.RegisterObserverServer(s, l)
-
-	log.Printf("Starting Game server at port %v\n", port)
-
-	if err := s.Serve(listener); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
-}
-
-func (l *LocalImpl) NewGameInstance(server interconnect.Observer_ProcessGameServer) *GameInstance {
-	return &GameInstance{
-		fuel:   l.fuel,
-		word:   util.NewSecretString(l.word),
-		server: server,
-	}
-}
 
 type GameInstance struct {
 	server interconnect.Observer_ProcessGameServer
