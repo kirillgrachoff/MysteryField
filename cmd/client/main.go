@@ -68,9 +68,12 @@ func GameStep(stream interconnect.Observer_ProcessGameClient) {
 		exitDefeat()
 	}
 
-	stream.Send(&interconnect.WordGuess{
+	err = stream.Send(&interconnect.WordGuess{
 		Character: readInputCharacter(),
 	})
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
 
 func main() {

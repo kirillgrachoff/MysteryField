@@ -9,7 +9,7 @@ import (
 const (
 	defaultPort       = "5000"
 	defaultSecretWord = "banana"
-	defaultFuelInit   = "10"
+	defaultFuelBudget = "10"
 )
 
 var (
@@ -23,7 +23,7 @@ func init() {
 
 	secretWord = util.GetOrDefault("SECRET_WORD", defaultSecretWord)
 
-	fuel := util.GetOrDefault("FUEL_INIT", defaultFuelInit)
+	fuel := util.GetOrDefault("FUEL_BUDGET", defaultFuelBudget)
 
 	value, err := strconv.Atoi(fuel)
 	if err != nil {
