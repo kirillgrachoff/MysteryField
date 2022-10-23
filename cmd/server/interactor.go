@@ -4,8 +4,9 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	"server/interconnect"
-	"server/util"
+
+	"github.com/kirillgrachoff/MysteryField/pkg/interconnect"
+	"github.com/kirillgrachoff/MysteryField/pkg/util"
 )
 
 type ObserverImpl struct {
