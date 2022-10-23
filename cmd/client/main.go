@@ -1,13 +1,14 @@
 package main
 
 import (
-	"client/interconnect"
-	"client/util"
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
 	"log"
 	"os"
+
+	"github.com/kirillgrachoff/MysteryField/pkg/interconnect"
+	"github.com/kirillgrachoff/MysteryField/pkg/util"
 )
 
 const (

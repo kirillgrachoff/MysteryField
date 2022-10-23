@@ -2,8 +2,9 @@ package main
 
 import (
 	"log"
-	"server/util"
 	"strconv"
+
+	"github.com/kirillgrachoff/MysteryField/pkg/util"
 )
 
 const (

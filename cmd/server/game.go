@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"server/interconnect"
-	"server/util"
 	"strings"
+
+	"github.com/kirillgrachoff/MysteryField/pkg/interconnect"
+	"github.com/kirillgrachoff/MysteryField/pkg/util"
 )
 
 type GameInstance struct {
